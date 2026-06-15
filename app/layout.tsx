@@ -4,6 +4,7 @@ import "./atlas/css/styles.css";
 import "./atlas/css/charts.css";
 import "./atlas/css/sections.css";
 import "./atlas/css/gallery.css";
+import "./atlas/css/live.css";
 
 // Anton (condensed display), Archivo (UI/body), JetBrains Mono (data tickers).
 const anton = Anton({

@@ -17,25 +17,30 @@ import {
   TempoChart,
   TitlesChart,
 } from "@/components/atlas/ChartSections";
+import { NewsSection } from "@/components/atlas/NewsSection";
+import { VideoSection } from "@/components/atlas/VideoSection";
+import { SocialSection } from "@/components/atlas/SocialSection";
+import { PhotoCredits } from "@/components/atlas/PhotoCredits";
+import { photoSrc } from "@/lib/atlas/photos";
 
 const MOMENTS = [
-  { cls: "m1", k: "Champions", t: "The trophy lift", ph: "Add the hero moment — the trophy lift" },
-  { cls: "m2", k: "Celebration", t: "Pure euphoria", ph: "Add a celebration photo" },
-  { cls: "m3", k: "Top scorer", t: "The Golden Boot", ph: "Add a top-scorer photo" },
-  { cls: "m4", k: "Atmosphere", t: "A stadium roar", ph: "Add a crowd / stadium photo" },
-  { cls: "m5", k: "Drama", t: "The final whistle", ph: "Add a decisive-moment photo" },
-  { cls: "m6", k: "Kickoff", t: "Opening ceremony", ph: "Add an opening-ceremony photo" },
+  { cls: "m1", k: "Champions", t: "The trophy", ph: "Add the hero moment — the trophy lift", photo: "trophy" },
+  { cls: "m2", k: "Celebration", t: "Pure euphoria", ph: "Add a celebration photo", photo: "moment-celebration" },
+  { cls: "m3", k: "Top scorer", t: "The Golden Boot", ph: "Add a top-scorer photo", photo: undefined },
+  { cls: "m4", k: "Atmosphere", t: "A stadium roar", ph: "Add a crowd / stadium photo", photo: "moment-atmosphere" },
+  { cls: "m5", k: "Drama", t: "The final whistle", ph: "Add a decisive-moment photo", photo: undefined },
+  { cls: "m6", k: "Kickoff", t: "Opening atmosphere", ph: "Add an opening-ceremony photo", photo: "moment-opening" },
 ];
 
 const CITIES = [
-  { name: "New York / New Jersey", venue: "MetLife Stadium · Final", ph: "New York / NJ" },
-  { name: "Los Angeles", venue: "SoFi Stadium", ph: "Los Angeles" },
-  { name: "Dallas", venue: "AT&T Stadium", ph: "Dallas" },
-  { name: "Miami", venue: "Hard Rock Stadium", ph: "Miami" },
-  { name: "Mexico City", venue: "Estadio Azteca · Opener", ph: "Mexico City" },
-  { name: "Toronto", venue: "BMO Field", ph: "Toronto" },
-  { name: "Vancouver", venue: "BC Place", ph: "Vancouver" },
-  { name: "Atlanta", venue: "Mercedes-Benz Stadium", ph: "Atlanta" },
+  { key: "city-nynj", name: "New York / New Jersey", venue: "MetLife Stadium · Final", ph: "New York / NJ" },
+  { key: "city-la", name: "Los Angeles", venue: "SoFi Stadium", ph: "Los Angeles" },
+  { key: "city-dallas", name: "Dallas", venue: "AT&T Stadium", ph: "Dallas" },
+  { key: "city-miami", name: "Miami", venue: "Hard Rock Stadium", ph: "Miami" },
+  { key: "city-mexico", name: "Mexico City", venue: "Estadio Azteca · Opener", ph: "Mexico City" },
+  { key: "city-toronto", name: "Toronto", venue: "BMO Field", ph: "Toronto" },
+  { key: "city-vancouver", name: "Vancouver", venue: "BC Place", ph: "Vancouver" },
+  { key: "city-atlanta", name: "Atlanta", venue: "Mercedes-Benz Stadium", ph: "Atlanta" },
 ];
 
 const PODIUM = [
@@ -61,6 +66,9 @@ export default function Home() {
           <a href="#growth">Growth</a>
           <a href="#nerve">Nerve</a>
           <a href="#twentysix">2026</a>
+          <a href="#news">News</a>
+          <a href="#watch">Watch</a>
+          <a href="#social">X</a>
         </div>
       </nav>
 
@@ -142,7 +150,13 @@ export default function Home() {
         <Reveal className="moments-grid d1">
           {MOMENTS.map((m) => (
             <figure className={`m-cell ${m.cls}`} key={m.cls}>
-              <PhotoSlot variant="slot-dark" shape="rounded" radius={14} placeholder={m.ph} />
+              <PhotoSlot
+                variant="slot-dark"
+                shape="rounded"
+                radius={14}
+                placeholder={m.ph}
+                src={m.photo ? photoSrc(m.photo) : undefined}
+              />
               <figcaption>
                 <span className="mc-k">{m.k}</span>
                 <span className="mc-t">{m.t}</span>
@@ -288,7 +302,13 @@ export default function Home() {
             <div className="cities-grid">
               {CITIES.map((c) => (
                 <figure className="city" key={c.name}>
-                  <PhotoSlot variant="slot-26" shape="rounded" radius={12} placeholder={c.ph} />
+                  <PhotoSlot
+                    variant="slot-26"
+                    shape="rounded"
+                    radius={12}
+                    placeholder={c.ph}
+                    src={photoSrc(c.key)}
+                  />
                   <div className="city-name">{c.name}</div>
                   <div className="city-venue">{c.venue}</div>
                 </figure>
@@ -301,6 +321,12 @@ export default function Home() {
           </Reveal>
         </div>
       </section>
+
+      {/* LIVE HUB — news, video, X (free legal feeds, all linking to source) */}
+      <NewsSection />
+      <VideoSection />
+      <SocialSection />
+      <PhotoCredits />
 
       {/* FOOTER */}
       <footer className="site-foot">
