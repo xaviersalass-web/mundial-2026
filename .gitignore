@@ -32,9 +32,16 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.local.example
 
 # vercel
 .vercel
+
+# ruflo / claude-flow artifacts
+.claude-flow/
+.swarm/
+.hive-mind/
+ruv-swarm.db*
 
 # typescript
 *.tsbuildinfo

@@ -1,0 +1,254 @@
+/* ============================================================================
+   WORLD CUP ATLAS — STYLES
+   ========================================================================== */
+
+/* Fonts (Anton / Archivo / JetBrains Mono) are loaded via next/font in
+   app/layout.tsx and exposed as --font-anton / --font-archivo / --font-mono. */
+
+:root {
+  /* base */
+  --paper:      #f4efe4;
+  --paper-2:    #ece5d6;
+  --ink:        #161410;
+  --ink-2:      #2a2620;
+  --ink-soft:   #6c6557;
+  --line:       #ddd4c1;
+
+  /* festive 2026 accents — shared chroma, varied hue */
+  --c-ink:      #161410;
+  --c-blue:     oklch(0.58 0.18 255);
+  --c-sky:      oklch(0.72 0.14 230);
+  --c-green:    oklch(0.66 0.17 155);
+  --c-gold:     oklch(0.80 0.15 85);
+  --c-orange:   oklch(0.70 0.18 55);
+  --c-red:      oklch(0.62 0.21 27);
+  --c-magenta:  oklch(0.60 0.22 350);
+
+  --maxw: 1180px;
+  --gut: clamp(20px, 5vw, 64px);
+
+  --f-display: var(--font-anton), 'Anton', sans-serif;
+  --f-ui: var(--font-archivo), 'Archivo', sans-serif;
+  --f-mono: var(--font-mono), 'JetBrains Mono', monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--f-ui);
+  font-weight: 500;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+/* paper grain texture */
+body::before {
+  content: "";
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+/* ---- type scale ---------------------------------------------------------- */
+.kicker {
+  font-family: var(--f-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+}
+.kicker::before {
+  content: "";
+  width: 26px; height: 2px;
+  background: currentColor;
+  display: inline-block;
+}
+
+.display {
+  font-family: var(--f-display);
+  font-weight: 400;
+  line-height: 0.88;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+h2.section-title {
+  font-family: var(--f-display);
+  font-size: clamp(2.6rem, 7vw, 5.6rem);
+  line-height: 0.86;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.lead {
+  font-size: clamp(1.05rem, 1.7vw, 1.32rem);
+  font-weight: 500;
+  color: var(--ink-2);
+  max-width: 60ch;
+  text-wrap: pretty;
+}
+
+.mono { font-family: var(--f-mono); }
+.tnum { font-variant-numeric: tabular-nums; }
+
+/* ---- layout -------------------------------------------------------------- */
+section { position: relative; z-index: 2; }
+
+.wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding-left: var(--gut);
+  padding-right: var(--gut);
+}
+
+.section-pad { padding-block: clamp(80px, 12vh, 160px); }
+
+.section-head { margin-bottom: clamp(40px, 6vh, 72px); }
+.section-head .kicker { margin-bottom: 22px; }
+.section-head .lead { margin-top: 22px; }
+
+.eyebrow-num {
+  font-family: var(--f-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: var(--ink-soft);
+}
+
+/* ---- reveal animation ---------------------------------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1),
+              transform 0.8s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.in { opacity: 1; transform: none; }
+.reveal.d1 { transition-delay: 0.08s; }
+.reveal.d2 { transition-delay: 0.16s; }
+.reveal.d3 { transition-delay: 0.24s; }
+.reveal.d4 { transition-delay: 0.32s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  html { scroll-behavior: auto; }
+}
+
+/* ---- progress bar -------------------------------------------------------- */
+.progress {
+  position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+  background: linear-gradient(90deg, var(--c-green), var(--c-gold), var(--c-magenta));
+  z-index: 100;
+  transition: width 0.1s linear;
+}
+
+/* ---- nav ----------------------------------------------------------------- */
+.topnav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 90;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px var(--gut);
+  mix-blend-mode: difference;
+  color: #fff;
+  pointer-events: none;
+}
+.topnav .brand {
+  font-family: var(--f-display);
+  font-size: 1.15rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.topnav .brand span { opacity: 0.6; }
+.topnav .navlinks {
+  display: flex; gap: 22px;
+  font-family: var(--f-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  pointer-events: auto;
+}
+.topnav .navlinks a { color: inherit; text-decoration: none; opacity: 0.85; }
+.topnav .navlinks a:hover { opacity: 1; }
+@media (max-width: 720px) { .topnav .navlinks { display: none; } }
+
+/* ---- buttons / toggles --------------------------------------------------- */
+.toggle-group {
+  display: inline-flex;
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px;
+  gap: 2px;
+}
+.toggle-group button {
+  font-family: var(--f-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: none;
+  background: transparent;
+  color: var(--ink-soft);
+  padding: 8px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+.toggle-group button:hover { color: var(--ink); }
+.toggle-group button.active { background: var(--ink); color: var(--paper); }
+
+/* ---- generic card -------------------------------------------------------- */
+.card {
+  background: #fbf8f0;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: clamp(20px, 3vw, 32px);
+}
+
+/* ---- tooltip ------------------------------------------------------------- */
+.wc-tip {
+  position: fixed;
+  z-index: 120;
+  pointer-events: none;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--f-ui);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 9px 12px;
+  border-radius: 9px;
+  line-height: 1.35;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.14s, transform 0.14s;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.22);
+  max-width: 240px;
+}
+.wc-tip.show { opacity: 1; transform: none; }
+.wc-tip .t-k { font-family: var(--f-mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.6; display:block; margin-bottom: 2px; }
+.wc-tip .t-v b { font-weight: 800; }
+
+/* ---- footer -------------------------------------------------------------- */
+.site-foot {
+  background: var(--ink);
+  color: var(--paper);
+  padding-block: 64px;
+}
+.site-foot .wrap { display: flex; flex-wrap: wrap; gap: 24px; justify-content: space-between; align-items: flex-end; }
+.site-foot .big {
+  font-family: var(--f-display);
+  font-size: clamp(2.4rem, 8vw, 6rem);
+  line-height: 0.85;
+  text-transform: uppercase;
+}
+.site-foot .meta { font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.1em; opacity: 0.65; line-height: 2; }
