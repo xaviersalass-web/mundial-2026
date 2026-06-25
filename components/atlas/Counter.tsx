@@ -34,7 +34,7 @@ export function Counter({ target, className }: { target: number; className?: str
   }, [target]);
 
   return (
-    <span className={className} ref={ref}>
+    <span className={className} ref={ref} aria-label={target.toLocaleString()}>
       0
     </span>
   );

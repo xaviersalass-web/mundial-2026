@@ -16,6 +16,8 @@ export function PhotoSlot({
   placeholder,
   src,
   alt,
+  objectPosition,
+  priority = false,
 }: {
   variant: Variant;
   shape?: Shape;
@@ -23,6 +25,10 @@ export function PhotoSlot({
   placeholder: string;
   src?: string;
   alt?: string;
+  /** CSS object-position for the crop (e.g. "center 22%" to keep a face in frame). */
+  objectPosition?: string;
+  /** Eager-load above-the-fold images; everything else lazy-loads. */
+  priority?: boolean;
 }) {
   const borderRadius = shape === "circle" ? "50%" : `${radius}px`;
   const filled = Boolean(src);
@@ -35,7 +41,15 @@ export function PhotoSlot({
       <div className="ps-frame">
         {src && (
           // eslint-disable-next-line @next/next/no-img-element
-          <img className="ps-img" src={src} alt={alt ?? placeholder} draggable={false} />
+          <img
+            className="ps-img"
+            src={src}
+            alt={alt ?? placeholder}
+            draggable={false}
+            loading={priority ? "eager" : "lazy"}
+            decoding="async"
+            style={objectPosition ? { objectPosition } : undefined}
+          />
         )}
       </div>
       {!filled && (

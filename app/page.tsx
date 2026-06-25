@@ -21,32 +21,40 @@ import { NewsSection } from "@/components/atlas/NewsSection";
 import { VideoSection } from "@/components/atlas/VideoSection";
 import { SocialSection } from "@/components/atlas/SocialSection";
 import { PhotoCredits } from "@/components/atlas/PhotoCredits";
-import { photoSrc } from "@/lib/atlas/photos";
+import { photoSrc, photoPos, photoLabel } from "@/lib/atlas/photos";
 
 const MOMENTS = [
-  { cls: "m1", k: "Champions", t: "The trophy", ph: "Add the hero moment — the trophy lift", photo: "trophy" },
-  { cls: "m2", k: "Celebration", t: "Pure euphoria", ph: "Add a celebration photo", photo: "moment-celebration" },
-  { cls: "m3", k: "Top scorer", t: "The Golden Boot", ph: "Add a top-scorer photo", photo: undefined },
-  { cls: "m4", k: "Atmosphere", t: "A stadium roar", ph: "Add a crowd / stadium photo", photo: "moment-atmosphere" },
-  { cls: "m5", k: "Drama", t: "The final whistle", ph: "Add a decisive-moment photo", photo: undefined },
-  { cls: "m6", k: "Kickoff", t: "Opening atmosphere", ph: "Add an opening-ceremony photo", photo: "moment-opening" },
+  { cls: "m1", k: "Champions", t: "The trophy", ph: "The trophy lift", photo: "trophy" },
+  { cls: "m2", k: "Celebration", t: "Pure euphoria", ph: "A celebration", photo: "moment-celebration" },
+  { cls: "m3", k: "Top scorer", t: "The Golden Boot", ph: "The top scorer", photo: "moment-scorer" },
+  { cls: "m4", k: "Atmosphere", t: "A stadium roar", ph: "Stadium atmosphere", photo: "moment-atmosphere" },
+  { cls: "m5", k: "Drama", t: "The final whistle", ph: "A decisive moment", photo: "moment-drama" },
+  { cls: "m6", k: "Kickoff", t: "Opening atmosphere", ph: "Opening night", photo: "moment-opening" },
 ];
 
 const CITIES = [
   { key: "city-nynj", name: "New York / New Jersey", venue: "MetLife Stadium · Final", ph: "New York / NJ" },
-  { key: "city-la", name: "Los Angeles", venue: "SoFi Stadium", ph: "Los Angeles" },
-  { key: "city-dallas", name: "Dallas", venue: "AT&T Stadium", ph: "Dallas" },
-  { key: "city-miami", name: "Miami", venue: "Hard Rock Stadium", ph: "Miami" },
   { key: "city-mexico", name: "Mexico City", venue: "Estadio Azteca · Opener", ph: "Mexico City" },
+  { key: "city-dallas", name: "Dallas", venue: "AT&T Stadium · Semi-final", ph: "Dallas" },
+  { key: "city-atlanta", name: "Atlanta", venue: "Mercedes-Benz Stadium · Semi-final", ph: "Atlanta" },
+  { key: "city-la", name: "Los Angeles", venue: "SoFi Stadium", ph: "Los Angeles" },
+  { key: "city-miami", name: "Miami", venue: "Hard Rock Stadium", ph: "Miami" },
+  { key: "city-seattle", name: "Seattle", venue: "Lumen Field", ph: "Seattle" },
+  { key: "city-sfbay", name: "San Francisco Bay", venue: "Levi's Stadium", ph: "SF Bay Area" },
+  { key: "city-houston", name: "Houston", venue: "NRG Stadium", ph: "Houston" },
+  { key: "city-kansascity", name: "Kansas City", venue: "Arrowhead Stadium", ph: "Kansas City" },
+  { key: "city-boston", name: "Boston", venue: "Gillette Stadium", ph: "Boston" },
+  { key: "city-philadelphia", name: "Philadelphia", venue: "Lincoln Financial Field", ph: "Philadelphia" },
   { key: "city-toronto", name: "Toronto", venue: "BMO Field", ph: "Toronto" },
   { key: "city-vancouver", name: "Vancouver", venue: "BC Place", ph: "Vancouver" },
-  { key: "city-atlanta", name: "Atlanta", venue: "Mercedes-Benz Stadium", ph: "Atlanta" },
+  { key: "city-guadalajara", name: "Guadalajara", venue: "Estadio Akron", ph: "Guadalajara" },
+  { key: "city-monterrey", name: "Monterrey", venue: "Estadio BBVA", ph: "Monterrey" },
 ];
 
 const PODIUM = [
-  { ph: "Klose", name: "Miroslav Klose", meta: "GER · 2002–2014", goals: "16" },
-  { ph: "Ronaldo", name: "Ronaldo Nazário", meta: "BRA · 1998–2006", goals: "15" },
-  { ph: "Müller", name: "Gerd Müller", meta: "GER · 1970–1974", goals: "14" },
+  { key: "pod-klose", ph: "Klose", name: "Miroslav Klose", meta: "GER · 2002–2014", goals: "16" },
+  { key: "pod-ronaldo", ph: "Ronaldo", name: "Ronaldo Nazário", meta: "BRA · 1998–2006", goals: "15" },
+  { key: "pod-muller", ph: "Müller", name: "Gerd Müller", meta: "GER · 1970–1974", goals: "14" },
 ];
 
 export default function Home() {
@@ -116,7 +124,14 @@ export default function Home() {
               <figure className="pod" key={p.name}>
                 <div className="pod-photo">
                   <span className="pod-rank">{i + 1}</span>
-                  <PhotoSlot variant="slot-light" shape="circle" placeholder={p.ph} />
+                  <PhotoSlot
+                    variant="slot-light"
+                    shape="circle"
+                    placeholder={p.ph}
+                    src={photoSrc(p.key)}
+                    objectPosition={photoPos(p.key)}
+                    alt={`${p.name} — ${p.goals} World Cup goals`}
+                  />
                 </div>
                 <figcaption>
                   <div className="pod-name">{p.name}</div>
@@ -142,8 +157,9 @@ export default function Home() {
               made history
             </h2>
             <p className="lead">
-              The numbers tell one story — the images tell another. Add your own licensed
-              photography to the frames below to bring each chapter to life.
+              The numbers tell one story — these frames tell another. Six images, one
+              for each chapter of the tournament&apos;s history, from the trophy lift to
+              the final whistle.
             </p>
           </Reveal>
         </div>
@@ -156,6 +172,7 @@ export default function Home() {
                 radius={14}
                 placeholder={m.ph}
                 src={m.photo ? photoSrc(m.photo) : undefined}
+                alt={m.photo ? photoLabel(m.photo) : undefined}
               />
               <figcaption>
                 <span className="mc-k">{m.k}</span>
@@ -297,7 +314,7 @@ export default function Home() {
           <Reveal className="cities d2">
             <div className="cities-head">
               <div className="kicker">16 host cities</div>
-              <span className="ch-note">Add a licensed city / stadium photo to each frame</span>
+              <span className="ch-note">Three nations · sixteen venues · one tournament</span>
             </div>
             <div className="cities-grid">
               {CITIES.map((c) => (
@@ -308,6 +325,7 @@ export default function Home() {
                     radius={12}
                     placeholder={c.ph}
                     src={photoSrc(c.key)}
+                    alt={`${c.name} — ${c.venue}`}
                   />
                   <div className="city-name">{c.name}</div>
                   <div className="city-venue">{c.venue}</div>
@@ -343,7 +361,7 @@ export default function Home() {
             <br />
             Figures: historical FIFA World Cup records
             <br />
-            Built as a design portfolio piece
+            Photography: Wikimedia Commons &amp; Unsplash · see credits above
           </div>
         </div>
       </footer>

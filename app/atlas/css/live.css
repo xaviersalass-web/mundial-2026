@@ -104,6 +104,22 @@
   box-shadow: 0 30px 60px -44px rgba(0, 0, 0, 0.3);
 }
 .x-timeline { min-height: 340px; }
+/* Fallback shown until/unless the third-party X widget mounts (script blocked,
+   offline, or slow). Reads as an intentional CTA, never a blank box. */
+.x-fallback {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 10px; min-height: 340px; padding: 32px; text-align: center;
+  text-decoration: none; color: var(--ink);
+  border: 1px dashed var(--line); border-radius: 12px;
+  transition: background 0.2s ease;
+}
+.x-fallback:hover { background: rgba(0, 0, 0, 0.02); }
+.x-fallback .xf-mark { font-family: var(--f-display); font-size: 2.4rem; line-height: 1; }
+.x-fallback .xf-handle { font-family: var(--f-ui); font-weight: 800; font-size: 1.05rem; }
+.x-fallback .xf-cta {
+  font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--c-blue);
+}
 
 .x-accounts { display: flex; flex-direction: column; gap: 10px; }
 .x-accounts-head { margin-bottom: 6px; }

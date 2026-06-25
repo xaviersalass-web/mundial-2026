@@ -36,7 +36,7 @@ export function Hero() {
           <span className="l l1">A&nbsp;CENTURY</span>
           <span className="l l2">OF&nbsp;THE</span>
           <span className="l l3">
-            WORLD&nbsp;CUP<em>.</em>
+            WORLD&nbsp;CUP<em aria-hidden="true">.</em>
           </span>
         </h1>
         <p className="hero-lead lead">

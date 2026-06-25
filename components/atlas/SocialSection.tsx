@@ -48,14 +48,20 @@ export function SocialSection() {
         <div className="x-wrap">
           <Reveal className="x-timeline-frame d1">
             <div className="x-timeline" ref={tlRef}>
+              {/* The X widget replaces this anchor with an embedded timeline on load.
+                  If the script is blocked/offline, it stays as a clean CTA card. */}
               <a
-                className="twitter-timeline"
+                className="twitter-timeline x-fallback"
                 data-theme="light"
                 data-height="620"
                 data-chrome="noheader nofooter transparent"
                 href="https://twitter.com/FIFAWorldCup?ref_src=twsrc%5Etfw"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                Posts from @FIFAWorldCup
+                <span className="xf-mark" aria-hidden="true">𝕏</span>
+                <span className="xf-handle">@FIFAWorldCup</span>
+                <span className="xf-cta">Open the live timeline ↗</span>
               </a>
             </div>
           </Reveal>
